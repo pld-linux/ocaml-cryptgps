@@ -1,8 +1,17 @@
+#
+# Conditional build:
+%bcond_without	ocaml_opt	# skip building native optimized binaries (bytecode is always built)
+
+# not yet available on x32 (ocaml 4.02.1), remove when upstream will support it
+%ifnarch %{ix86} %{x8664} arm aarch64 ppc sparc sparcv9
+%undefine	with_ocaml_opt
+%endif
+
 Summary:	Ocaml Blowfish, DES, and 3DES implementation
 Summary(pl.UTF-8):	Implementacja Blowfish, DES, and 3DES w Ocamlu
 Name:		ocaml-cryptgps
 Version:	0.2.1
-Release:	2
+Release:	3
 License:	MIT/X11
 Group:		Libraries
 Source0:	http://download.camlcity.org/download/cryptgps-%{version}.tar.gz
@@ -45,13 +54,17 @@ biblioteki cryptgps.
 %setup -q -n cryptgps
 
 %build
-%{__make} all opt
+%{__make} all %{?with_ocaml_opt:opt} \
+	CC="%{__cc} %{rpmcflags} -fPIC"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/{,site-lib/}cryptgps
 
-install *.cm[ixa]* *.a $RPM_BUILD_ROOT%{_libdir}/ocaml/cryptgps
+install *.cm[ix] $RPM_BUILD_ROOT%{_libdir}/ocaml/cryptgps
+%if %{with ocaml_opt}
+install *.cmxa *.a $RPM_BUILD_ROOT%{_libdir}/ocaml/cryptgps
+%endif
 
 install -d $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/cryptgps
 cat > $RPM_BUILD_ROOT%{_libdir}/ocaml/site-lib/cryptgps/META <<EOF
@@ -70,6 +83,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc LICENSE *.mli
 %dir %{_libdir}/ocaml/cryptgps
-%{_libdir}/ocaml/cryptgps/*.cm[ixa]*
+%{_libdir}/ocaml/cryptgps/*.cm[xi]
+%if %{with ocaml_opt}
 %{_libdir}/ocaml/cryptgps/*.a
+%{_libdir}/ocaml/cryptgps/*.cmxa
+%endif
 %{_libdir}/ocaml/site-lib/cryptgps
