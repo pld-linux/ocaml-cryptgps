@@ -11,7 +11,7 @@ Summary:	Ocaml Blowfish, DES, and 3DES implementation
 Summary(pl.UTF-8):	Implementacja Blowfish, DES, and 3DES w Ocamlu
 Name:		ocaml-cryptgps
 Version:	0.2.1
-Release:	4
+Release:	5
 License:	MIT/X11
 Group:		Libraries
 Source0:	http://download.camlcity.org/download/cryptgps-%{version}.tar.gz
