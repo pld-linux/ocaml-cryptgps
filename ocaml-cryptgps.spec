@@ -23,6 +23,8 @@ BuildRequires:	ocaml >= 3.04-7
 Conflicts:	ocaml-cryptgps-devel < 0.2.1-6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		debug_package	%{nil}
+
 %description
 This library implements the symmetric cryptographic algorithms
 Blowfish, DES, and 3DES. The algorithms are written in O'Caml,
