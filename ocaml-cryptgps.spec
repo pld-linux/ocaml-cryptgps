@@ -44,7 +44,7 @@ używających biblioteki cryptgps.
 
 %package devel
 Summary:	Ocaml Blowfish, DES, and 3DES implementation - development part
-Summary(pl.UTF-8):	Implementacja Blowfish, DES, and 3DES w Ocamlu - cześć programistyczna
+Summary(pl.UTF-8):	Implementacja Blowfish, DES, and 3DES w Ocamlu - część programistyczna
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 %requires_eq	ocaml
